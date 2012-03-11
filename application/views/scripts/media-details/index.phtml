@@ -1,0 +1,66 @@
+
+<?php
+	$mediamapper = new Application_Model_MediaDetailsMapper();
+	$mediadata = new Application_Model_MediaDetails;
+
+	if(array_key_exists("media_name", $_GET))
+	{
+		$media_hash = $_GET['media_name'];
+		$mediamapper->find($mediadata, $media_hash);				
+	}
+	else
+	{
+		echo "No Media selected using random media";
+	}
+
+	$mediatype = $mediadata->getType();
+	
+?>
+
+<div id="details">
+	<div id="media-details">
+		<span class="media-scaled">
+		<?php
+			if($mediatype == "texture")
+			{
+				$firstfile = array_shift(array_keys($mediadata->getFiles()));
+				$pp1 = substr($firstfile, 0, 2);
+				$pp2 = substr($firstfile, 2, 2);
+				$fullfile = "/images/$pp1/$pp2/".$firstfile."_resize.png";
+
+				echo "<img src=\"$fullfile\"></a>\n";
+			}
+		?>
+		</span>		
+	</div>
+		
+	<div style="clear: both;"></div>
+
+	<br><br>
+
+	<div id="tags">
+		<input type="text" id="pubtex-tags" name="blah" />
+		<script type="text/javascript">
+		$(document).ready(function() 
+		{
+			$("#pubtex-tags").tokenInput("http://www.pubtex.org/ajax-tags", 
+			{
+				theme: "facebook",
+				searchDelay: 100,
+				hintText: false,
+				preventDuplicates: true,
+				prePopulate: 
+				[
+					<?php
+						foreach($mediadata->getTags() as $key => $value)
+						{
+							echo "{id: $key, name: \"$value\"},\n";
+						}
+					?>
+				]
+			});
+		});
+		</script>
+	</div>
+					<?php print_r($mediadata->getTags()); ?>
+</div>

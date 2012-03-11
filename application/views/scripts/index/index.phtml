@@ -1,0 +1,11 @@
+<div class="image-gallery">
+  <div class="allimages">
+
+	<?php 
+		$media = new Application_Model_MediaMapper();
+		$newm = $media->getNewMedia(20);
+		echo "<div style=\"clear: both;\"></div><br>\n";
+		$this->imageGallery('/images', $newm);
+	?>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<?php
+	$this->title = "Users";
+	$this->headTitle($this->title);
+?>
+
+<p><a href="<?php echo $this->url(array('controller'=>'index',
+'action'=>'add'));?>">Add new User</a></p>
+<table>
+	<tr>
+		<th>Account</th>
+		<th>Name</th>
+		<th>&nbsp;</th>
+	</tr>
+
+	<?php foreach($this->user as $user) : ?>
+
+	<tr>
+		<td><?php echo $this->escape($user->username);?></td>
+		<td><?php echo $this->escape($user->real_name);?></td>
+		<td>
+			<a href="<?php echo $this->url(array('controller'=>'index',
+			'action'=>'edit', 'id'=>$user->id));?>">Edit</a>
+			<a href="<?php echo $this->url(array('controller'=>'index',
+			'action'=>'delete', 'id'=>$user->id));?>">Delete</a>
+		</td>
+	</tr>
+<?php endforeach; ?>
+</table>
+
