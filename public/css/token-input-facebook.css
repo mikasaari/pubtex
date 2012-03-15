@@ -3,15 +3,15 @@ ul.token-input-list-facebook {
     overflow: hidden; 
     height: 70px;
     width: 512px;
-    border: 1px solid #8496ba;
+	margin-bottom: 4px;
+    border: 0px ridge #555;
     cursor: text;
     font-size: 12px;
     font-family: Verdana;
     min-height: 1px;
     z-index: 999;
-    margin: 0;
     padding: 0;
-    background-color: #666;
+    background-color: #555;
     list-style-type: none;
     clear: left;
 }
@@ -20,7 +20,7 @@ ul.token-input-list-facebook li input {
     border: 0;
     width: 100px;
     padding: 3px 8px;
-    background-color: #666666;
+    background-color: #555;
     margin: 2px 0;
     -webkit-appearance: caret;
 }

@@ -72,6 +72,8 @@ class Application_Model_AjaxMapper
 	public function getLatestImages($amount)
 	{
 		$db = Zend_Db_Table_Abstract::getDefaultAdapter();
+	
+		$amount = $amount - 1;
 		
 		$query = "select files.hash_name from files where id>=((select MAX(id) from files)-$amount)";
 
