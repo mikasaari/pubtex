@@ -36,6 +36,7 @@ li.token-input-token-facebook {
     cursor: default;
     border: 1px solid #ccd5e4;
     font-size: 14px;
+	font-family: Verdana,sans-serif;
 		font-weight: bold;
     border-radius: 5px;
     -moz-border-radius: 5px;
