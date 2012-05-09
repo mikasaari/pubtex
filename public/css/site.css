@@ -461,11 +461,11 @@ body,html
 
 #details
 {
+	position: fixed;
 	width: 700px;
 	height: 780px;
 	border: 1px solid #fff;
-	position: absolute;
-	top: 50%;	
+	top: 50%;
 	left: 50%;
 	margin-left: -350px;
 	margin-top: -390px;
@@ -482,7 +482,7 @@ body,html
 	position: relative;
 	font-size: 20px;
 	color: #c3ff00;
-	background: #black;
+	background: black;
 	text-align: center;
 	float: left;
 	width: 300px;
