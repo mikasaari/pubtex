@@ -16,6 +16,31 @@ function changed(tag)
 	}
 }
 
+function wheel(e)
+{
+	e.preventDefault();
+}
+
+var keys = [37, 38, 39, 40];
+
+function keydown(e)
+{
+	for(var i = keys.length; i--;)
+	{
+		if(e.keyCode === keys[i])
+		{
+			e.preventDefault();
+			return;
+		}
+
+		if(e.keyCode === 27)
+		{
+			closeDetails();
+			return;
+		}
+	}
+}
+
 function closeDetails()
 {
 	$('#details').hide();
@@ -25,7 +50,7 @@ function closeDetails()
 		{
        window.removeEventListener('DOMMouseScroll', wheel, false);
    }
-   window.onmousewheel = document.onmousewheel = null;  
+   window.onmousewheel = document.onmousewheel = document.onkeydown = null;
 
 	return false;
 }
@@ -134,9 +159,16 @@ function details(hash)
 		// Try blocking the scrolling
 	  if (window.addEventListener) 
 		{
-	     window.addEventListener('DOMMouseScroll', wheel, false);
+	     window.addEventListener('DOMMouseScroll', wheel, false);			
 	  }
 	  window.onmousewheel = document.onmousewheel = wheel;
+		document.onkeydown = keydown;
+
+		// Hide details if clicked outside of the details div
+		$('.dim').click(function()
+		{
+			closeDetails();
+		});
 
 		// Show details
 		$('.dim').show();
@@ -163,11 +195,6 @@ function searchGallery(ns) {
 			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
 		}
 	});
-}
-
-function wheel(e)
-{
-	e.preventDefault();
 }
 
 $(document).ready(function() 
