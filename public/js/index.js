@@ -20,6 +20,12 @@ function closeDetails()
 {
 	$('#details').hide();
 	$('.dim').hide();
+
+   if (window.removeEventListener) 
+		{
+       window.removeEventListener('DOMMouseScroll', wheel, false);
+   }
+   window.onmousewheel = document.onmousewheel = null;  
 }
 
 function details(hash)
@@ -123,6 +129,14 @@ function details(hash)
 			});			
 		});
 
+		// Try blocking the scrolling
+	  if (window.addEventListener) 
+		{
+	      window.addEventListener('DOMMouseScroll', wheel, false);
+	  }
+	  window.onmousewheel = document.onmousewheel = wheel;
+
+		// Show details
 		$('.dim').show();
 		$('#details').show();
 	}
@@ -147,6 +161,11 @@ function searchGallery(ns) {
 	});
 }
 
+function wheel(e)
+{
+	e.preventDefault();
+}
+
 $(document).ready(function() 
 {
 	// Gallery image information
@@ -155,11 +174,12 @@ $(document).ready(function()
 	var menu_height = 100;
 	var footer_height = 250;
 	var image_count = Math.round(($(window).height() - banner_height - menu_height - footer_height) / 150) * 5;
-	var isLoading = false;
+	var isLoading = false;		
 
   // Scrolling
 	$(window).scroll(function()
 	{ 		
+
 		if(($(window).scrollTop() > $(document).height()-$(window).height()-20 || $(window).height() >= $(document).height()) && !isLoading)
 		{
 			isLoading = true;
