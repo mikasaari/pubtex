@@ -8,6 +8,22 @@ body,html
 	background-color: #000000;
 }
 
+.dim
+{
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	background-color: black;
+	filter: alpha(opacity=50);
+	-khtml-opacity: 0.75;
+	-moz-opacity: 0.75;
+	opacity: 0.75;
+	display: none;
+}
+
 
 /* ---------------------------------------------------- */
 /*                    Layout                            */
@@ -443,12 +459,59 @@ body,html
 	border-radius: 20px;
 }
 
-
-
 #details
 {
-	width: 850;
-	margin: auto;
+	width: 700px;
+	height: 780px;
+	border: 1px solid #fff;
+	position: absolute;
+	top: 50%;	
+	left: 50%;
+	margin-left: -350px;
+	margin-top: -390px;
+	background: #000;
+	-moz-border-radius:30px;
+	-webkit-border-radius:30px;
+	border-radius: 30px;
+	display: none;
+	z-index: 100;
+}
+
+#details .header .topic
+{
+	position: relative;
+	font-size: 20px;
+	color: #c3ff00;
+	background: #black;
+	text-align: center;
+	float: left;
+	width: 300px;
+	left: 50%;
+	margin-left: -150px;
+}
+
+#details .header .close
+{
+	position: relative;
+	font-size: 20px;
+	height: 15px;
+	width: 15px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius: 3px;
+	color: #c3ff00;
+	background: #666;
+	float: right;
+	margin-right: 20px;
+	margin-top: 4px;
+	text-align: center;
+	border: 1px solid #fff;
+}
+
+#details .header .close .cross
+{
+	position: relative;
+	top: -6px;
 }
 
 #media-details
@@ -477,7 +540,7 @@ body,html
 	position: relative;
 	color: #fff;
 	cursor: pointer;
-	left: -10px;
+	left: -20px;
 	top: 60px;
 	width: 5px;
 	display: block;

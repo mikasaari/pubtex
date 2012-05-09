@@ -18,9 +18,6 @@
         <controllerFile controllerName="AjaxMedia">
           <actionMethod actionName="index"/>
         </controllerFile>
-        <controllerFile controllerName="MediaDetails">
-          <actionMethod actionName="index"/>
-        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory>
@@ -45,9 +42,6 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="AjaxMedia">
-            <viewScriptFile forActionName="index"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="MediaDetails">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
@@ -91,9 +85,6 @@
             <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
           <testApplicationControllerFile forControllerName="AjaxMedia">
-            <testApplicationActionMethod forActionName="index"/>
-          </testApplicationControllerFile>
-          <testApplicationControllerFile forControllerName="MediaDetails">
             <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
