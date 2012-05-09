@@ -26,6 +26,8 @@ function closeDetails()
        window.removeEventListener('DOMMouseScroll', wheel, false);
    }
    window.onmousewheel = document.onmousewheel = null;  
+
+	return false;
 }
 
 function details(hash)
@@ -132,7 +134,7 @@ function details(hash)
 		// Try blocking the scrolling
 	  if (window.addEventListener) 
 		{
-	      window.addEventListener('DOMMouseScroll', wheel, false);
+	     window.addEventListener('DOMMouseScroll', wheel, false);
 	  }
 	  window.onmousewheel = document.onmousewheel = wheel;
 
@@ -140,6 +142,8 @@ function details(hash)
 		$('.dim').show();
 		$('#details').show();
 	}
+
+	return false;
 }
 
 function searchGallery(ns) {
@@ -156,7 +160,7 @@ function searchGallery(ns) {
 			var second = obj[x].file_hash.substring(2,4);
 			var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
 
-			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\');"><img src="'+imgfile+'"/></a></span></span></span>');
+			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
 		}
 	});
 }
@@ -197,7 +201,7 @@ $(document).ready(function()
 						var second = obj[x].file_hash.substring(2,4);
 						var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
 
-						$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\');"><img src="'+imgfile+'"/></a></span></span></span>');
+						$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
 					}
 
 					// Update last_id
@@ -244,7 +248,7 @@ $(document).ready(function()
 			var second = obj[x].file_hash.substring(2,4);
 			var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
 
-			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\');"><img src="'+imgfile+'"/></a></span></span></span>');
+			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\');return false;"><img src="'+imgfile+'"/></a></span></span></span>');
 		}
 
 		// Update last_id
