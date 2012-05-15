@@ -12,23 +12,6 @@ function getParameterByName(name)
 
 $(document).ready(function() 
 {
-	$("#signin").mouseover(function()
-	{
-	
-		$("#signin_popup").show();
-		return false;
-	}).mouseout(function()
-	{
-		$("#signin_popup").hide();
-		return true;
-	});
-
-	$("body #main").click(function()
-	{
-		$("#signin_popup").hide();
-		return false;
-	});	
-
 });
 
 

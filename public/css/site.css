@@ -24,16 +24,89 @@ body,html
 	display: none;
 }
 
+/* ---------------------------------------------------- */
+/*                     Login                            */
+/* ---------------------------------------------------- */
+
+
 
 /* ---------------------------------------------------- */
 /*                    Layout                            */
 /* ---------------------------------------------------- */
 #header
 {
-	width: 900;
+	width: 900px;
+	height: 150px;
 	margin: auto;
 	overflow: visible;
+	background-image: url("/images/bg.png");
+	background-repeat: no-repeat;
+	-moz-border-radius-bottomright:50px;
+	-moz-border-radius-topleft:50px;
+	-webkit-border-bottom-right-radius:50px;
+	-webkit-border-top-left-radius:50px;
+	border-bottom-right-radius: 50px;
+	border-top-left-radius: 50px;
+
 }
+
+#header .logo
+{
+	position: relative;
+	float: left;
+	top: 0px;
+}
+
+#header .logo img
+{
+	height: 140px;
+}
+
+#header .slogan
+{
+	position: relative;
+	float: left;
+	top: 0px;
+}
+
+#header .slogan img
+{
+	height: 140px;
+}
+
+#header .separator
+{
+	position: relative;
+	float: left;
+	top: 0px;
+}
+
+#header .separator img
+{
+	height: 140px;
+}
+
+#header .menu .item
+{
+	position: relative;
+	float: left;
+}
+
+#header .menu .item img
+{
+	height: 30px;
+}
+
+#header .menu .upper
+{
+	height: 30px;
+}
+
+#header .menu .lower
+{
+	margin-top: 40px;
+}
+
 
 /* =====               Menu                       ===== */
 #menu
@@ -89,18 +162,31 @@ body,html
 	position: relative;
 	float: right;
 	margin-top: 10px;
-	margin-right: 7px;
-	padding: 3px;
-	background-color: #c3ff00;
-	color: #000000;
 }
+
 #signin a
 {
-	color: #000000;
 	text-decoration: none;
 }
 
-#signin_popup
+#signin .label img
+{
+	height: 20px;
+}
+
+#logout
+{
+	position: relative;
+	float: right;
+	margin-top: 20px;
+}
+
+#logout img
+{
+	height: 20px;
+}
+
+#popup
 {
 	width:270px;
 	background-color:#fff;
@@ -109,6 +195,7 @@ body,html
 	position: absolute;
 	left: -200px;
 	display:none;
+	z-index: 2000;
 	-moz-border-radius-topright:6px;
 	-moz-border-radius-bottomleft:6px;
 	-moz-border-radius-bottomright:6px;
@@ -117,6 +204,65 @@ body,html
 	-webkit-border-bottom-right-radius:6px;
 	border-bottom-right-radius: 20px;
 	border-top-left-radius: 20px;
+}
+
+#logged
+{
+}
+
+#logged .inup
+{
+	position: relative;
+	height: 25px;
+	margin: 0px;
+	top: 10px;
+}
+
+#logged .inup .right
+{
+	position: relative;
+	float: right;
+}
+
+#logged .inlo
+{	
+	position: relative;
+	margin: 0px;
+	margin-top: 4px;
+	height: 25px;
+}
+
+#logged .loggedin
+{
+	position: relative;
+	float: left;
+}
+
+
+#logged .loggedin img
+{
+	height: 20px;
+}
+
+#logged .loggedas
+{
+	position: relative;
+	float: left;
+	color: #c3ff00;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#logged .logout
+{
+	position: relative;
+	float: right;
+
+}
+
+#logged .logout img
+{
+	height: 15px;
 }
 
 

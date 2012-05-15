@@ -207,6 +207,26 @@ $(document).ready(function()
 	var image_count = Math.round(($(window).height() - banner_height - menu_height - footer_height) / 150) * 5;
 	var isLoading = false;		
 
+
+	// Signin box
+	$("#signin").mouseover(function()
+	{
+	
+		$("#popup").show();
+		return false;
+	}).mouseout(function()
+	{
+		$("#popup").hide();
+		return true;
+	});
+
+	$("body #main").click(function()
+	{
+		$("#popup").hide();
+		return false;
+	});	
+
+
   // Scrolling
 	$(window).scroll(function()
 	{ 		

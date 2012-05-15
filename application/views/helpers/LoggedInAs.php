@@ -7,9 +7,22 @@ class Zend_View_Helper_LoggedInAs extends Zend_View_Helper_Abstract
 		if ($auth->hasIdentity()) 
 		{
 			$username = $auth->getIdentity()->username;
-			$logoutUrl = $this->view->url(array('controller'=>'auth',
-				'action'=>'logout'), null, true);
-			return '<div id="lnksign">'.$username .  ' <a href="'.$logoutUrl.'"><img src="/images/Logout.png" /></a></div>';
+			$logoutUrl = $this->view->url(array('controller'=>'auth',	'action'=>'logout'), null, true);
+			$login = <<<EOT
+			<div id="logged">
+				<div class="inup">
+					<div class="right">
+						<div class="loggedin"><img src="/images/loggedin.png" /></div>
+						<div class="loggedas">$username</div>
+					</div>
+				</div>
+
+				<div class="inlo">
+					<div class="logout"><a href="$logoutUrl"><img src="/images/logout.png" /></a></div>
+				</div>
+			</div>
+EOT;
+			return $login;
 		} 
 
 		$request = Zend_Controller_Front::getInstance()->getRequest();
@@ -24,9 +37,9 @@ class Zend_View_Helper_LoggedInAs extends Zend_View_Helper_Abstract
 
 		$login = <<<EOT
 		<div id="signin">
-			<div id="signin_label"><img src="/images/Login.png" /></div>
-	                <div id="signin_popup" style="display:none;">
-        	                <form method="post" action="http://www.pubtex.org/auth">
+			<div class="label"><img src="/images/login.png" /></div>
+	                <div id="popup" style="display:none;">
+        	                <form method="post" action="http://pubtexi.local/auth">
                 	                <label>UserName
                         	        <input type="text" name="username"/></label>
                                 	<label>Password
