@@ -1,0 +1,34 @@
+<?php
+	error_log("WOE");
+	print_r($this->entries);
+	if(count($this->entries) > 0)
+	{
+		// Send the file
+		if(file_exists($this->entries['file']))
+		{
+			$downloadFile = $this->entries['file'];
+			header('Content-Description:Fire Transfer');
+			if($this->file['prefix'] == "png")
+				header('Content-Type: image/png');
+			else if($fileprefix == "jpg")
+				header('Content-Type: image/jpeg');
+			header('Content-Disposition: attachment; filename='.basename($downloadFile));
+			header('Content-Transfer-Encoding: binary');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($downloadFile));
+			ob_clean();
+			flush();
+			readfile($downloadFile);
+		}
+		else
+		{
+			echo "DARN";
+		}
+	}
+	else
+	{
+		echo "DARN";
+	}
+?>
