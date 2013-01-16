@@ -1,3 +1,8 @@
+var first_id;
+var last_id;
+var show_count = 5;
+var scrollTimer, lastScrollFireTime = 0;
+
 function advanced()
 {
 	$('.more').hide();
@@ -42,7 +47,7 @@ function keydown(e)
 }
 
 function closeDetails()
-{
+{41
 	$('#details').hide();
 	$('.dim').hide();
 
@@ -67,6 +72,9 @@ function details(hash)
 
 			// Clear the thumbnail list
 			$(".ad-thumb-list").empty();
+
+			// Clear Ad-Controls
+			$(".ad-controls").empty();
 
 			// Add new thumbnails to the list
 			for(var x in files)
@@ -192,115 +200,76 @@ function searchGallery(ns) {
 			var second = obj[x].file_hash.substring(2,4);
 			var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
 
-			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
+			// $("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><span class="thumbover"><img src="images/pxmDownload.png" /><img src="images/pxmAddPacket.png" /><img src="images/pxmRateUp.png" /><img src="images/pxmRateDown.png" /></span><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
+
+			thumbstr = '<span class="mediacontainer">\n' +
+'	<span class="media">\n' +
+'		<span class="mediathumb">\n' +
+'	  	<div class="thumbdownload"><a href="#" onclick="download(\''+obj[x].file_hash+'\');return false;"><img src="images/pxmDownload.png" /></a></div>\n' +
+'			<div class="thumbaddpacket"><a href="#" onclick="addpacket(\''+obj[x].file_hash+'\');return false;"><img src="images/pxmAddPacket.png" /></a></div>\n' +
+'			<div class="thumbrateup"><a href="#" onclick="rateup(\''+obj[x].file_hash+'\');return false;"><img src="images/pxmRateUp.png" /></a></div>\n' +
+'			<div class="thumbratedown"><a href="#" onclick="ratedown(\''+obj[x].file_hash+'\');return false;"><img src="images/pxmRateDown.png" /></a></div>\n' +
+'			<a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a>\n' +
+'		</span>\n' +
+'	</span>\n'+
+'</span>\n';
+
+			$("#freesearch").append(thumbstr);
 		}
+
+		// Update first_id and last_id
+		first_id = obj[0].id;
+		last_id = obj[obj.length-1].id;
+
+		// -------------------------------------------------------
+		// Media actions
+		// -------------------------------------------------------
+		$(".mediacontainer").mouseover(function()
+		{
+			$(this).find("div.thumbdownload").show();
+			$(this).find("div.thumbaddpacket").show();
+			$(this).find("div.thumbrateup").show();
+			$(this).find("div.thumbratedown").show();
+		});
+
+		$(".mediacontainer").mouseout(function()
+		{
+			$(this).find("div.thumbdownload").hide();
+			$(this).find("div.thumbaddpacket").hide();
+			$(this).find("div.thumbrateup").hide();
+			$(this).find("div.thumbratedown").hide();
+		});
+
 	});
 }
 
+function download(dwfile)
+{
+	window.open('file-download?df='+dwfile);
+}
+
+// -------------------------------------------------------
+// Document is ready, initialize everything
+// -------------------------------------------------------
 $(document).ready(function() 
 {
 	// Gallery image information
-	var last_id;
 	var banner_height = 100;
 	var menu_height = 100;
 	var footer_height = 250;
-	var image_count = Math.round(($(window).height() - banner_height - menu_height - footer_height) / 150) * 5;
-	var isLoading = false;		
-
-
-	// Signin box
-	$("#signin").mouseover(function()
-	{
+	var image_count = Math.round(($(window).height() - banner_height - menu_height - footer_height) / 150) * 5;		
 	
-		$("#popup").show();
-		return false;
-	}).mouseout(function()
-	{
-		$("#popup").hide();
-		return true;
-	});
+	// -------------------------------------------------------
+	// When page loaded, fetch first images
+	// -------------------------------------------------------
+	searchGallery('/ajax-media?n='+image_count);
 
-	$("body #main").click(function()
-	{
-		$("#popup").hide();
-		return false;
-	});	
-
-
-  // Scrolling
-	$(window).scroll(function()
-	{ 		
-
-		if(($(window).scrollTop() > $(document).height()-$(window).height()-20 || $(window).height() >= $(document).height()) && !isLoading)
-		{
-			isLoading = true;
-			$.get('/ajax-media?n=20&s='+last_id, function(data)
-			{				
-				// Parse the data coming from ajax call
-				var obj = jQuery.parseJSON(data);
-
-				if(obj.length > 0)
-				{
-					// Add each image one by one to the gallery
-					for(x in obj)
-					{
-						var first = obj[x].file_hash.substring(0,2);
-						var second = obj[x].file_hash.substring(2,4);
-						var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
-
-						$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
-					}
-
-					// Update last_id
-					last_id = obj[obj.length-1].id;
-				}
-				isLoading = false;
-			});
-		}
-	});
-
-	// Create Token Input for media details div (hidden)
-	$("#pubtex-tags").tokenInput("http://pubtexi.local/ajax-tags", 
-	{
-		theme: "facebook",
-		searchDelay: 100,
-		hintText: false,
-		preventDuplicates: true,
-		deleteText: '',
-	});
-
-	// Tabs
-	$('#tabs').tabs();
-	
-	// Searching
+	// -------------------------------------------------------
+	// Search text input actions
+	// -------------------------------------------------------
 	var srchstr = "";
 
 	$("#searchinput").append('<form class="searchform" name="searchform"><span class="label">Search: </span><input class="searchfield" id="target" name="search" type="text" value="" /><input class="searchbutton" type="button" value="Go" /></form>');
-
-	$.get('/ajax-media?n='+image_count, function(data)
-	{
-		// Parse the data coming from ajax call
-		var obj = jQuery.parseJSON(data);
-
-		// Remove the gallery 
-		$("#freesearch").remove();
-
-		// Create new clean gallery
-		$("#gallery").append('<div id="freesearch"><div style=\"clear: both;\"></div></div>');
-
-		// Add each image one by one to the gallery
-		for(x in obj)
-		{
-			var first = obj[x].file_hash.substring(0,2);
-			var second = obj[x].file_hash.substring(2,4);
-			var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
-
-			$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\');return false;"><img src="'+imgfile+'"/></a></span></span></span>');
-		}
-
-		// Update last_id
-		last_id = obj[obj.length-1].id;
-	});
 
 	$('#target').keyup(
 	function(event) 
@@ -314,16 +283,23 @@ $(document).ready(function()
 		{
 			var tmp = document.searchform.search.value;
 			var ta = new Array();
-			var ns = "/ajax-media?";
+			var ns = "/ajax-media?c="+image_count+"&";
 
 			ta = tmp.split(' ');
-			for(x in ta)
-			{
-				ns = ns + ta[x];
-				if(x < ta.length-1)
-					ns = ns + "&";
-			}
+			last = ta.length - 1;
 
+			// Add full tags to the filter
+			if(last > 0)
+			{
+				ns = ns + "ta=";
+				for(x in ta)
+				{
+					ns = ns + ta[x];
+					if(x < ta.length-2)
+						ns = ns + ",";
+				}
+			}
+	
 			searchGallery(ns);
 		}
 
@@ -331,7 +307,7 @@ $(document).ready(function()
 		{
 			var tmp = document.searchform.search.value;
 			var ta = new Array();
-			var ns = "/ajax-media?";
+			var ns = "/ajax-media?c="+image_count+"&ta=";
 
 			ta = tmp.split(' ');
 			last = ta.length - 1;
@@ -341,10 +317,11 @@ $(document).ready(function()
 			for(x=0;x<last;x=x+1)
 			{
 				ns = ns + ta[x];
-				if(x < ta.length-1)
-					ns = ns + "&";
+				if(x < ta.length-2)
+					ns = ns + ",";
 			}
 			
+			// Tags / No-Tags
 			if(last > 0)	
 			{
 				searchGallery(ns);
@@ -360,22 +337,38 @@ $(document).ready(function()
 		{
 			var tmp = document.searchform.search.value;
 			var ta = new Array();
-			var ns = "/ajax-media?";
+			var ns = "/ajax-media?c="+image_count+"&";
 
+			// Get tags from the input field
 			ta = tmp.split(' ');
 			last = ta.length - 1;
 			if(last < 0)
 				last = 0;
 
-			for(x=0;x<last;x=x+1)
+			// Add full tags to the filter
+			if(last > 0)
 			{
-				ns = ns + ta[x] + "&";
+				ns = ns + "ta=";
+				for(x=0;x<last;x=x+1)
+				{
+					ns = ns + ta[x];
+					if(x < ta.length-2)
+					{
+						ns = ns + ",";
+					}
+				}
 			}
 			
-			ns = ns + 'ha='+ta[last];
+			// Add partially written tag to the filter
+			if(last > 0)
+				ns = ns + '&pa='+ta[last];
+			else
+				ns = ns + 'pa='+ta[last];
 			
+			// Show images on the screen
 			searchGallery(ns);
 
+			// Update saved search string for next round
 			srchstr = document.searchform.search.value;
 		}		
 	});
@@ -385,5 +378,127 @@ $(document).ready(function()
 	{
 
 	});
+
+	// -------------------------------------------------------
+	// Scrolling behaviour
+	// -------------------------------------------------------
+
+	$(window).scroll(function()
+	{
+    var minScrollTime = 100;
+    var now = new Date().getTime();
+
+		function processScroll()
+		{		
+			if(($(window).scrollTop() > $(document).height()-$(window).height()-20 || $(window).height() >= $(document).height()))
+			{	
+				var tmp = document.searchform.search.value;
+				var searching = "";
+
+				// Generate search filter if there is tags in text input field
+				if(tmp.length > 0)
+				{
+					var ta = new Array();
+					searching = '/ajax-media?c='+show_count+'&s='+last_id+'&ta=';
+
+					ta = tmp.split(' ');
+					last = ta.length - 1;
+					if(last < 0)
+						last = 0;
+
+					for(x=0;x<last;x=x+1)
+					{
+						searching = searching + ta[x];
+						if(x < ta.length-2)
+							searching = searching + ",";
+					}
+				}
+				else
+				{
+					searching = '/ajax-media?n='+show_count+'&s='+last_id;
+				}
+	
+				// If there is search filter generated, then request data from http server
+				if(searching != "")
+				{
+					$.get(searching, function(data)
+					{				
+						// Parse the data coming from ajax call
+						var obj = jQuery.parseJSON(data);
+	
+						if(obj.length > 0)
+						{
+							// Add each image one by one to the gallery
+							for(x in obj)
+							{
+								var first = obj[x].file_hash.substring(0,2);
+								var second = obj[x].file_hash.substring(2,4);
+								var imgfile = '/data/images/'+first+'/'+second+'/'+obj[x].file_hash+'_thumb.png';
+
+								$("#freesearch").append('<span class="mediacontainer"><span class="media"><span class="mediathumb"><a href="#" onclick="details(\''+obj[x].media_hash+'\'); return false;"><img src="'+imgfile+'"/></a></span></span></span>');
+							}
+
+							// Update last_id
+							last_id = obj[obj.length-1].id;
+						}					
+					});
+				}		
+			}
+		}
+
+    if (!scrollTimer) 
+		{
+			if (now - lastScrollFireTime > (3 * minScrollTime)) 
+			{
+				processScroll();   // fire immediately on first scroll
+				lastScrollFireTime = now;
+			}
+
+			scrollTimer = setTimeout(function() 
+			{
+				scrollTimer = null;
+				lastScrollFireTime = new Date().getTime();
+				processScroll();
+			}, minScrollTime);
+		}	
+	});
+
+	// -------------------------------------------------------
+	// Token Input for Detail popup
+	// -------------------------------------------------------
+	$("#pubtex-tags").tokenInput("http://pubtexi.local/ajax-tags", 
+	{
+		theme: "facebook",
+		searchDelay: 100,
+		hintText: false,
+		preventDuplicates: true,
+		deleteText: '',
+	});
+
+	// -------------------------------------------------------
+	// Login, Logout area
+	// -------------------------------------------------------
+	$("#signin").mouseover(function()
+	{
+	
+		$("#popup").show();
+		return false;
+	}).mouseout(function()
+	{
+		$("#popup").hide();
+		return true;
+	});
+
+	$("body #main").click(function()
+	{
+		$("#popup").hide();
+		return false;
+	});
+
+	// -------------------------------------------------------
+	// Initialize tabs
+	// -------------------------------------------------------
+	$('#tabs').tabs();	
+
 });
 

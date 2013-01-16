@@ -542,6 +542,41 @@ body,html
 }
 
 
+/* ---------------------------------------------------- */
+/*                   Thumbover                          */
+/* ---------------------------------------------------- */
+.thumbdownload
+{
+	display: none;
+	position: absolute;
+	margin-left: -20px;
+	margin-top: -20px;
+}
+
+.thumbaddpacket
+{
+	display: none;
+	position: absolute;
+	margin-left: 120px;
+	margin-top: -20px;
+}
+
+.thumbrateup
+{
+	display: none;
+	position: absolute;
+	margin-left: -20px;
+	margin-top: 120px;
+}
+
+.thumbratedown
+{
+	display: none;
+	position: absolute;
+	margin-left: 120px;
+	margin-top: 120px;
+}
+
 
 
 /* ---------------------------------------------------- */
@@ -745,9 +780,33 @@ body,html
 }
 
 
+.thumbup
+{
+	position: relative;
+	float:left;
+	top: 15px;
+	background: url(../images/opa25.png);
+	width: 135px;
+	color: #999;
+	height: 30px;	
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
 
-
-
+.thumblow
+{
+	position: relative;
+	float:right;
+	top: 10px;
+	background: url(../images/opa25.png);
+	width: 30px;
+	height: 90px;	
+	color: #999;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
 
 .media-description-main-container
 {

@@ -13,10 +13,11 @@ class Access_Acl extends Zend_Acl
 		$this->add(new Zend_Acl_Resource('index'));
 		$this->add(new Zend_Acl_Resource('error'));
 		$this->add(new Zend_Acl_Resource('auth'));
-		$this->add(new Zend_Acl_Resource('details'));
+		//$this->add(new Zend_Acl_Resource('details'));
 		$this->add(new Zend_Acl_Resource('ajax-media'));
-		$this->add(new Zend_Acl_Resource('ajax-file'));
-		$this->add(new Zend_Acl_Resource('media-details'));
+		//$this->add(new Zend_Acl_Resource('ajax-file'));
+		//$this->add(new Zend_Acl_Resource('media-details'));
+		$this->add(new Zend_Acl_Resource('file-download'));
 
 		//Add a resource called news, which inherits page
 		//$this->add(new Zend_Acl_Resource('rating'), 'media');
@@ -25,10 +26,11 @@ class Access_Acl extends Zend_Acl
 		$this->allow('guest', 'index', 'view');
 		$this->allow('guest', 'error', 'view');
 		$this->allow('guest', 'auth', 'view');
-		$this->allow('guest', 'details', 'view');
+		//$this->allow('guest', 'details', 'view');
 		$this->allow('guest', 'ajax-media', 'view');
-		$this->allow('guest', 'ajax-file', 'view');
-		$this->allow('guest', 'media-details', 'view');
+		//$this->allow('guest', 'ajax-file', 'view');
+		//$this->allow('guest', 'media-details', 'view');
+		$this->allow('guest', 'file-download', 'view');
 
 		//and users can comment news
 		//$this->allow('user', 'rating', 'rate');

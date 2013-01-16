@@ -39,7 +39,7 @@ EOT;
 		<div id="signin">
 			<div class="label"><img src="/images/login.png" /></div>
 	                <div id="popup" style="display:none;">
-        	                <form method="post" action="http://pubtex.org/auth">
+        	                <form method="post" action="http://pubtexi.local/auth">
                 	                <label>UserName
                         	        <input type="text" name="username"/></label>
                                 	<label>Password

@@ -21,6 +21,9 @@
         <controllerFile controllerName="Auth">
           <actionMethod actionName="index"/>
         </controllerFile>
+        <controllerFile controllerName="FileDownload">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Login"/>
@@ -50,6 +53,9 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Auth">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="FileDownload">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
@@ -96,6 +102,9 @@
             <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
           <testApplicationControllerFile forControllerName="Auth">
+            <testApplicationActionMethod forActionName="index"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="FileDownload">
             <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>

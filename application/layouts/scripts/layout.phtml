@@ -30,8 +30,9 @@
 
 		}
 
-		if($controller == 'media-details')
+		if($controller == 'auth')
 		{
+			echo "<meta http-equiv=\"REFRESH\" content=\"0;url=http://pubtexi.local\">";
 		}
 	?>
 
@@ -75,7 +76,7 @@
 
 	<div style=\"clear: both;\"></div>
 
-<?php echo $this->layout()->content; ?>
+<?php if($controller != "auth") echo $this->layout()->content; ?>
 
 </body>
 </html>

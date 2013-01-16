@@ -34,7 +34,7 @@ class AjaxMediaController extends Zend_Controller_Action
 
 			// Parse the Object array to be string array
 			$mediarr = array();
-			foreach(array_reverse($entries, true) as $key=>$values)
+			foreach($entries as $key=>$values)
 			{		
 				$first_entry = array_shift(array_keys($values->getFiles()));
 				$mediarr[] = array("id" => $values->getId(), "media_hash" => $values->getHashName(), "file_hash" => $first_entry );
@@ -79,54 +79,56 @@ class AjaxMediaController extends Zend_Controller_Action
 		// Search with tags
 		else
 		{	
-			if(array_key_exists("ha", $_GET) and sizeof($_GET) == 1)
-			{
-				$size = 0;
-			}
-			else
-			{
+			$size = 0;
+			$start = 0;
+			$amount = 0;
+			$str = "";
+
+			// Get Tags
+			if(array_key_exists("ta", $_GET))
+			{			
+				// Generate the filter string
 				$str = "(";
-				foreach($_GET as $key=>$value)
+				$tags = split(",", $_GET['ta']);
+				foreach($tags as  $tag)
 				{
-					if($key == 'ha' and $value != "")
-						continue;
-
-					$str = $str . "'" . $key ."'";
-
-					if($key != array_pop(array_keys($_GET)))
-						$str = $str . ", ";
+					$str = $str . "\"$tag\"";
+					if ($tag != end($tags))
+						$str = $str . ",";
 				}
-
-				// Set size to size of GET array
-				$size = sizeof($_GET);
-
-				// Last word is partial
-				if(array_pop(array_keys($_GET)) == 'ha')
-				{
-					$str = substr($str, 0, -2);		
-					$size = $size - 1;
-				}	
-
-				// Last character must be )
 				$str = $str . ")";
+
+				$tags = split(",", $_GET['ta']);
+				$size = sizeof($tags);
 			}
 
 			// Do we have partial word
-			if(array_key_exists("ha", $_GET))
+			if(array_key_exists("pa", $_GET))
 			{
-				$having = $_GET['ha'];
+				$having = $_GET['pa'];
 				$size = $size + 1;
 			}
 
+			// Is start and amount defined
+			if(array_key_exists("c", $_GET))
+				$amount = $_GET['c'];
+
+			if(array_key_exists("s", $_GET))
+				$start = $_GET['s'];
+
 			// Get all images from database and move those to views entries
-			$entries = $ajaximage->getTaggedImages($str, $having, $size);
+			error_log("FILTER $str $having $size");
+			$entries = $ajaximage->getTaggedImages($str, $having, $size, $amount, $start);
 
 			// Parse the object array to be string array for JSON
 			$mediarr = array();
 			foreach($entries as $key=>$values)
 			{		
-				$first_entry = array_shift(array_keys($values->getFiles()));
-				$mediarr[] = array("file_hash" => $first_entry, "media_hash" => $values->getHashName());
+				// $first_entry = array_shift(array_keys($values->getFiles()));
+				foreach($values->getFiles() as $fkey=>$fvalues)
+				{
+					$mediarr[] = array("id" => $values->getId(), "file_hash" => $fkey, "media_hash" => $values->getHashName());
+				}
 			}
 
 			// Set these entries to view entries
